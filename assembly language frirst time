@@ -1,0 +1,2159 @@
+.MODEL SMALL
+.STACK 100
+.DATA
+    LOGO    DB 13,10,9,"      ___________ __                             .__      "
+            DB 13,10,9,"      \_   _____//  |_  ___________  ____ _____  |  |     "
+            DB 13,10,9,"       |    __)_\   __\/ __ \_  __ \/    \\__  \ |  |     "
+            DB 13,10,9,"       |        \|  | \  ___/|  | \/   |  \/ __ \|  |__   "
+            DB 13,10,9,"      /_________/|__|  \_____>__|  |___|__(______/____/   "
+            DB 13,10,9,"      __________                                     __   "
+            DB 13,10,9,"      \______   \_____    ____   ________ __   _____/  |_ "
+            DB 13,10,9,"       |    |  _/\__  \  /    \ / ____/  |  \_/ __ \   __\"
+            DB 13,10,9,"       |    |   \ / __ \|   |  < <_|  |  |  /\  ___/|  |  "
+            DB 13,10,9,"       |______  /(______/___|__/\__   |____/  \_____>__|  "
+            DB 13,10,9,"                                   |__|                   $"
+;--------------------------------------------------------------------------
+    MENU    DB 13,10,9,9," ___________________________________________ "
+            DB 13,10,9,9,"|                   MENU                    |"
+            DB 13,10,9,9,"|                  ======                   |"
+            DB 13,10,9,9,"|   1. TRADISIONAL CLASSIC       USD 888    |"
+            DB 13,10,9,9,"|   2. SEAFOOD FEAST             USD 988    |"
+            DB 13,10,9,9,"|   3. MODERN FUSION             USD 788    |"
+            DB 13,10,9,9,"|   4. VEGETARIAN DELIGHT        USD 488    |"
+            DB 13,10,9,9,"|___________________________________________|$"
+    TC_PRICE DB "      888$"
+    SF_PRICE DB "      988$"
+    MF_PRICE DB "      788$"
+    VD_PRICE DB "      488$"  
+;--------------------------------------------------------------------------
+    MENU_TC DB 13,10,13,10,9,9,"TRADISIONAL CLASSIC..."
+            DB 13,10,9,9,"- Cold Appetizer Platter"
+            DB 13,10,9,9,"- Shark Fin Soup"
+            DB 13,10,9,9,"- Steamed Sea Bass"
+            DB 13,10,9,9,"- Roast Chicken"
+            DB 13,10,9,9,"- Braised Abalone with Sea Cucumber"
+            DB 13,10,9,9,"- Salt and Pepper Prawns"
+            DB 13,10,9,9,"- Mixed Vegetables"
+            DB 13,10,9,9,"- Longevity Noodles"
+            DB 13,10,9,9,"- Red Bean Soup"
+            DB 13,10,9,9,"- Fresh Fruit Platter$"
+;--------------------------------------------------------------------------
+    MENU_SF DB 13,10,13,10,9,9,"SEAFOOD FEAST..."
+            DB 13,10,9,9,"- Cold Seafood Platter"
+            DB 13,10,9,9,"- Fish Maw Soup"
+            DB 13,10,9,9,"- Steamed Lobster"
+            DB 13,10,9,9,"- Roast Duck"
+            DB 13,10,9,9,"- Braised Sea Cucumber and Mushrooms"
+            DB 13,10,9,9,"- Salted Egg Yolk Crab"
+            DB 13,10,9,9,"- Seasonal Greens"
+            DB 13,10,9,9,"- Fried Rice with Abalone"
+            DB 13,10,9,9,"- Sweet Glutinous Rice Balls"
+            DB 13,10,9,9,"- Fresh Fruit Platter$"
+;--------------------------------------------------------------------------
+    MENU_MF DB 13,10,13,10,9,9,"MODERN FUSION..."
+            DB 13,10,9,9,"- Fusion Appetizer Platter"
+            DB 13,10,9,9,"- Double-Boiled Soup"
+            DB 13,10,9,9,"- Grilled Cod Fish"
+            DB 13,10,9,9,"- Roast Suckling Pig"
+            DB 13,10,9,9,"- Braised Abalone with Truffle Oil"
+            DB 13,10,9,9,"- Honey-Glazed Prawns"
+            DB 13,10,9,9,"- Mixed Mushrooms and Tofu"
+            DB 13,10,9,9,"- Yam Paste with Pumpkin"
+            DB 13,10,9,9,"- Mango Pudding"
+            DB 13,10,9,9,"- Fresh Fruit Platter$"
+;--------------------------------------------------------------------------
+    MENU_VD DB 13,10,13,10,9,9,"VEGETARIAN DELIGHT..."
+            DB 13,10,9,9,"- Vegetarian Appetizer Platter"
+            DB 13,10,9,9,"- Vegetarian Hot and Sour Soup"
+            DB 13,10,9,9,"- Braised King Oyster Mushrooms"
+            DB 13,10,9,9,"- Crispy Tofu Skin Rolls"
+            DB 13,10,9,9,"- Stir-Fried Mixed Mushrooms"
+            DB 13,10,9,9,"- Sweet and Sour Eggplant"
+            DB 13,10,9,9,"- Buddha's Delight"
+            DB 13,10,9,9,"- Vegetarian Fried Rice"
+            DB 13,10,9,9,"- Sesame Balls"
+            DB 13,10,9,9,"- Fresh Fruit Platter$"
+;--------------------------------------------------------------------------
+    CHECKOUT DB 13,10,13,10,9,9,"CHECKOUT"
+             DB 13,10,9,9," __________________________________________"
+             DB 13,10,9,9,"|              PAYMENT METHODS             |"
+             DB 13,10,9,9,"|              ===============             |"
+             DB 13,10,9,9,"|          1. CASH                         |"
+             DB 13,10,9,9,"|          2. E-WALLET                     |"
+             DB 13,10,9,9,"|          3. EXIT                         |"
+             DB 13,10,9,9,"|__________________________________________|"
+             DB 13,10,13,10,9,9,"*Any other payment methods will not be accepted*"
+             DB 13,10,9,9,"*Sorry for the inconveniece!*",13,10
+             DB 13,10,9,9,"Option [ 1 | 2 | 3 ] -> $"
+
+    PAYMENT_EWALLET DB 13,10,9,9,"E-WALLET" ;QR CODE
+                    DB 13,10,9,9,   6 DUP(220), 32, 2 DUP(220), 32, 2 DUP(220),32, 32, 32,220, 32,6 DUP(220)
+                    DB 13,10,9,9,   219, 32, 2 DUP(220), 32,219,32,32,219,219,219,219, 32,219, 32,219, 32,219, 32, 2 DUP(220), 32,219
+                    DB 13,10,9,9,   219, 32, 2 DUP(223), 32,219,32,220, 32,32,219, 32, 32,223, 32,223, 32,219, 32, 2 DUP(223), 32,219
+                    DB 13,10,9,9,   6 DUP(223),32, 32,223,32,223,32, 32,223, 32, 32, 32,6 DUP(223)
+                    DB 13,10,9,9,   3 DUP(220),3 DUP(32),219,220,220,32,220,219, 32,219, 32,223, 32,219,219,32,223,32,219
+                    DB 13,10,9,9,   223, 32,223, 32, 32,219,32, 32,223,32,223, 32,32,219,219,219, 32, 32,223, 32,223,220
+                    DB 13,10,9,9,   219, 2 DUP(223), 32,219,32,220,220,220,32,220, 32,219,219,32,223, 32,223, 32, 32,220,219,223,32,32
+                    DB 13,10,9,9,   6 DUP(220),32, 32,223,223,32,223, 32,223,223, 32,223,223,219,219, 32, 32,223
+                    DB 13,10,9,9,   219, 32, 2 DUP(220), 32,219,32,219, 32,219, 32,223, 32,219,220,220,220, 32, 32,223,32,219
+                    DB 13,10,9,9,   219, 32, 2 DUP(223), 32,219,32,2 DUP(220), 32, 2 DUP(220),32,219,32,223,32,219,32,220,32,220,219
+                    DB 13,10,9,9,   6 DUP(223),32,223,32,223,223, 32, 32,223,32,223,32,32,32,32,223,223,223
+                    DB 13,10,9,9,"*Scan QR above then type amount to pay$"
+    PAYMENT_EWALLET1 DB 13,10,9,9,"PAY TO ETERNAL BANQUET -> USD $"
+
+
+    PAYMENT_CASH    DB 13,10,13,10,9,9,"CASH $"
+    PAYMENT_CASH1    DB 13,10,9,9,"PAY TO ETERNAL BANQUET -> USD $"
+    PAYMENT_CASH_R  DB "        CASH$"
+    PAYMENT_EWALLET_R DB "    E-WALLET$"
+;--------------------------------------------------------------------------
+    RECEIPT_TITLE   DB 13,10,9,9,"Receipt: $"
+    RECEIPT_DETAIL  DB 13,10,9,9,"|                  Enternal Banquet                |"
+                    DB 13,10,9,9,"|                Jalan Genting Kelang,             |"
+                    DB 13,10,9,9,"|                   Setapak, 53300                 |"
+                    DB 13,10,9,9,"|                    Kuala Lumpur.                 |"
+                    DB 13,10,9,9,"|                 Phone: 03-11131113               |$"
+    LINE            DB 13,10,9,9," __________________________________________________ $"
+    LINE1           DB 13,10,9,9," -------------------------------------------------- $"
+    LINE3           DB "   |$"
+    RECEIPT_TQPT    DB 13,10,9,9,"| Item                    Qty    Price     Total   |$"
+    RECEIPT_ITEM1   DB 13,10,9,9,"| Traditional Classic:     $"
+    RECEIPT_ITEM2   DB 13,10,9,9,"| Seafood Feast      :     $"
+    RECEIPT_ITEM3   DB 13,10,9,9,"| Modern Fusion      :     $"
+    RECEIPT_ITEM4   DB 13,10,9,9,"| Vegetarian Delight :     $"
+    RECEIPT_P_METHOD DB 13,10,9,9,"| Payment Method:                   $"
+    RECEIPT_TOTAL   DB 13,10,9,9,"| Total:                                USD $"
+    PAY_AMOUNT      DB 13,10,9,9,"| Payment Amount:                       USD $"
+    CHANGE          DB 13,10,9,9,"| Change:                               USD $"
+    THANK_YOU       DB 13,10,9,9,"| Thank you for dining with Eternal Banquet!       |$"
+;--------------------------------------------------------------------------
+    SELECT DB 13,10,13,10,9,9,"Welcome to < Eternal Banquet >"
+           DB 13,10,9,9,"1. View Menu"
+           DB 13,10,9,9,"2. Order"
+           DB 13,10,13,10,9,9,"Option: $"
+    VIEW_MENU0  DB 13,10,13,10,9,9,"View Menu in Detail? [Y/N] --> $"
+    VIEW_MENU1  DB 13,10,9,9,"Select Menu [ 1 | 2 | 3 | 4 ] --> $"
+    VIEW_MENU2  DB 13,10,9,9,"View Menu in Detail Again? [Y/N] --> $"
+
+    START_ORDER DB 13,10,13,10,9,9,"Start ordering? [Y/N] --> $"
+    INVALID     DB 13,10,9,9,"Invalid input. Please try again.$"
+    ORDER       DB 13,10,13,10,9,9,"Order: $"
+    CHOICE      DB 13,10,9,9,"Select bundle [ 1 | 2 | 3 | 4 ] --> $"
+    INVALIDCH   DB 13,10,"Invalid choice of order $"
+    NUMCHOICE   DB ?
+
+    ESCAPE DB 13,10,13,10,9,9,"Press twice the ESC button to EXIT$"
+    RESV DB 13,10,9,9,"Reservation table(s) [Max. 10]: $"
+    INP1 DB ?
+    INP2 DB ?
+    TABLENO DB ?
+    TOTAL DB 13,10,9,9,"NO. TABLE = $"
+    TC_TABLECALC DB 0
+    SF_TABLECALC DB 0
+    MF_TABLECALC DB 0
+    VD_TABLECALC DB 0
+    TC_TOTAL DW ?
+    SF_TOTAL DW ?
+    MF_TOTAL DW ?
+    VD_TOTAL DW ?
+    GRANDTOTAL DW ?
+    VARTABLE_LEFT DB 3AH
+    TABLE_LEFT1 DB 13,10,9,9,"You have $"
+    TABLE_LEFT2 DB " table(s) left",13,10,'$'
+    ORDER_AGAIN DB 13,10,9,9,"Do you want to order more? [Y|N} $"
+    ENDL        DB 13,10,'$'
+    TAB         DB 9,'    $'
+    STORE_P_METHOD DW ?
+    ENTER_AMOUNT_PAY1 DB ?
+    ENTER_AMOUNT_PAY2 DB ?
+    ENTER_AMOUNT_PAY3 DB ?
+    ENTER_AMOUNT_PAY4 DB ?
+    PRINT_CHANGE1 DW ?
+    PRINT_CHANGE2 DW ?
+    PRINT_CHANGE3 DW ?
+    PRINT_CHANGE4 DW ?
+    STORE_P_AMOUNT DW ?
+    BALANCE DW ?
+    MORE_CUSTOMER DB 13,10,9,9," Press | ENTER | for next customer order "
+                  DB 13,10,9,9," Press |  ESC  | to exit program $"
+    LESS_AMOUNT   DB 13,10,9,9,"The amount entered is insufficient. Please try again.$"
+    SHOW_PAY_AMOUNT DB 13,10,9,9,"Total amount need to pay: USD $"
+.CODE
+MAIN PROC
+    MOV AX,@DATA
+    MOV DS,AX
+;--------------------------------------------------------------------------
+RETURN1:
+    MOV TABLENO,0
+    MOV VARTABLE_LEFT,3AH
+    MOV TC_TABLECALC,0
+    MOV SF_TABLECALC,0
+    MOV MF_TABLECALC,0
+    MOV VD_TABLECALC,0
+    
+    MOV AX,0600H
+    MOV BH,07H
+    MOV CX,0000H
+    MOV DX,184FH
+    INT 10H
+
+    MOV AX,3
+    INT 10H
+    MOV AX,0B800H
+    MOV ES,AX
+    XOR DI,DI
+
+    MOV AH,0AH
+    MOV AL,' '
+    MOV CX,80*25
+    REP STOSW
+;--------------------------------------------------------------------------
+    HOME:
+    MOV AH,09H
+    LEA DX,LOGO
+    INT 21H
+;--------------------------------------------------------------------------
+    MOV AH,09H
+    LEA DX,SELECT
+    INT 21H
+;--------------------------------------------------------------------------
+    ;OPTION
+    MOV AH,01H
+    INT 21H
+   
+    ;IF (OPTION == 1) {MENU}
+    CMP AL,'1'
+    JE OPTION1
+    ;IF (OPTION == 2) {ORDER}
+    CMP AL,'2'
+    JE OPTION2
+    ;INVALID INPUT, RETURN
+    CALL MENU@_FUNC
+
+
+    OPTION1:
+    CALL OPTION1_FUNC
+    OPTION2:
+    CALL OPTION2_FUNC
+
+
+EXIT:
+    MOV AH,4CH
+    INT 21H
+
+
+OPTION1_FUNC PROC
+    ;IF (OPTION == 1) {MENU}
+
+    MOV AX,3
+    INT 10H
+    MOV AX,0B800H
+    MOV ES,AX
+    XOR DI,DI
+
+    MOV AH,09H
+    LEA DX,MENU
+    INT 21H
+
+
+RETURN2:
+    ;View Menu in Detail? [Y/N]
+    MOV AH,09H
+    LEA DX,VIEW_MENU0
+    INT 21H
+    ;READ
+    MOV AH,01H
+    INT 21H
+   
+    CMP AL,'Y';IF YES
+    JE YES
+    CMP AL,'y';IF YES
+    JE YES
+    CMP AL,'N';IF NO
+    JE NO
+    CMP AL,'n';IF NO
+    JE NO
+    CALL DISPLAY_INVALID;DISPLAY INVALID
+    JMP RETURN2
+
+
+    YES:
+        CALL YES_VIEW_AGN_FUNC
+    NO:
+        CALL NO_VIEW_AGN_FUNC
+
+
+OPTION1_FUNC ENDP
+OPTION2_FUNC PROC
+    MOV AX,3
+    INT 10H
+    MOV AX,0B800H
+    MOV ES,AX
+    XOR DI,DI
+
+    ORDERING:
+    MOV AH,09H
+    LEA DX,MENU
+    INT 21H
+
+    MOV AH,09H
+    LEA DX,ORDER
+    INT 21H
+
+
+RETURN_ORDER_MORE:
+    MOV AH,09H
+    LEA DX,CHOICE
+    INT 21H
+    ;read input
+    MOV AX,0
+    MOV AH,01H
+    INT 21H
+
+
+    CMP AL,'1'
+    JE IF_ORDER_TC
+    CMP AL,'2'
+    JE IF_ORDER_SF
+    CMP AL,'3'
+    JE IF_ORDER_MF
+    CMP AL,'4'
+    JE IF_ORDER_VD
+    CALL DISPLAY_INVALID
+    JMP ORDERING
+
+
+IF_ORDER_TC:
+    CALL ORDER_TC_START
+IF_ORDER_SF:
+    CALL ORDER_SF_START
+IF_ORDER_MF:
+    CALL ORDER_MF_START
+IF_ORDER_VD:
+    CALL ORDER_VD_START
+
+
+OPTION2_FUNC ENDP
+
+
+
+
+YES_VIEW_AGN_FUNC PROC
+    RETURN3:
+    ;YES
+        MOV AH,09H
+        LEA DX,VIEW_MENU1
+        INT 21H
+
+        MOV AX,0
+        MOV AH,01H
+        INT 21H
+
+        CMP AL,'1'
+        JE TC
+        CMP AL,'2'
+        JE SF
+        CMP AL,'3'
+        JE MF
+        CMP AL,'4'
+        JE VD
+        CALL DISPLAY_INVALID;DISPLAY INVALID
+        JMP RETURN3
+
+        TC:
+        CALL TC_FUNC
+        SF:
+        CALL SF_FUNC
+        MF:
+        CALL MF_FUNC
+        VD:
+        CALL VD_FUNC
+
+YES_VIEW_AGN_FUNC ENDP
+NO_VIEW_AGN_FUNC PROC
+RETURN4:
+    ;DISPLAY Y/N ORDER
+    MOV AH,09H
+    LEA DX,START_ORDER
+    INT 21H
+    ;READ CHAR
+    MOV AH,01H
+    INT 21H
+
+
+    CMP AL,'Y'
+    JE YES_ORDER
+    CMP AL,'y'
+    JE YES_ORDER
+    CMP AL,'N'
+    JE NO_ORDER
+    CMP AL,'n'
+    JE NO_ORDER
+    CALL DISPLAY_INVALID;DISPLAY INVALID
+    JMP RETURN4
+
+
+YES_ORDER:
+    CALL OPTION2_FUNC
+NO_ORDER:
+    JMP RETURN1
+
+
+NO_VIEW_AGN_FUNC ENDP
+
+
+
+
+TC_FUNC PROC
+    MOV AH,09H
+    LEA DX,MENU_TC
+    INT 21H
+
+
+    CALL ORDER_AGAIN_DETAIL1
+
+
+RETURN5:
+    ;DISPLAY Y/N ORDER
+    MOV AH,09H
+    LEA DX,START_ORDER
+    INT 21H
+    ;READ CHAR
+    MOV AH,01H
+    INT 21H
+
+
+    CMP AL,'Y'
+    JE YES_ORDER1
+    CMP AL,'y'
+    JE YES_ORDER1
+    CMP AL,'N'
+    JE NO_ORDER1
+    CMP AL,'n'
+    JE NO_ORDER1
+    CALL DISPLAY_INVALID;DISPLAY INVALID
+    JMP RETURN5
+
+
+YES_ORDER1:
+    CALL OPTION2_FUNC
+NO_ORDER1:
+    JMP RETURN1
+
+
+TC_FUNC ENDP
+SF_FUNC PROC
+    MOV AH,09H
+    LEA DX,MENU_SF
+    INT 21H
+
+
+    CALL ORDER_AGAIN_DETAIL2
+
+
+RETURN6:            
+        ;DISPLAY Y/N ORDER
+    MOV AH,09H
+    LEA DX,START_ORDER
+    INT 21H
+    ;READ CHAR
+    MOV AH,01H
+    INT 21H
+
+
+    CMP AL,'Y'
+    JE YES_ORDER2
+    CMP AL,'y'
+    JE YES_ORDER2
+    CMP AL,'N'
+    JE NO_ORDER2
+    CMP AL,'n'
+    JE NO_ORDER2
+    CALL DISPLAY_INVALID;DISPLAY INVALID
+    JMP RETURN6
+
+
+YES_ORDER2:
+    CALL OPTION2_FUNC
+NO_ORDER2:
+    JMP RETURN1
+
+
+SF_FUNC ENDP
+MF_FUNC PROC
+    MOV AH,09H
+    LEA DX,MENU_MF
+    INT 21H
+
+
+    CALL ORDER_AGAIN_DETAIL3
+
+
+RETURN7:
+    ;DISPLAY Y/N ORDER
+    MOV AH,09H
+    LEA DX,START_ORDER
+    INT 21H
+    ;READ CHAR
+    MOV AH,01H
+    INT 21H
+
+
+    CMP AL,'Y'
+    JE YES_ORDER3
+    CMP AL,'y'
+    JE YES_ORDER3
+    CMP AL,'N'
+    JE NO_ORDER3
+    CMP AL,'n'
+    JE NO_ORDER3
+    CALL DISPLAY_INVALID;DISPLAY INVALID
+    JMP RETURN7
+
+
+YES_ORDER3:
+    CALL OPTION2_FUNC
+NO_ORDER3:
+    JMP RETURN1
+
+
+MF_FUNC ENDP
+VD_FUNC PROC  
+    MOV AH,09H
+    LEA DX,MENU_VD
+    INT 21H
+
+
+    CALL ORDER_AGAIN_DETAIL4
+
+
+ RETURN8:          
+    ;DISPLAY Y/N ORDER
+    MOV AH,09H
+    LEA DX,START_ORDER
+    INT 21H
+    ;READ CHAR
+    MOV AH,01H
+    INT 21H
+
+
+    CMP AL,'Y'
+    JE YES_ORDER4
+    CMP AL,'y'
+    JE YES_ORDER4
+    CMP AL,'N'
+    JE NO_ORDER4
+    CMP AL,'n'
+    JE NO_ORDER4
+    CALL DISPLAY_INVALID;DISPLAY INVALID
+    JMP RETURN8
+
+
+YES_ORDER4:
+    CALL OPTION2_FUNC
+NO_ORDER4:
+    JMP RETURN1
+
+
+VD_FUNC ENDP
+
+
+
+
+MENU@_FUNC PROC
+    ;OTHERS OPTION(NOT OPTION1 AND OPTION2)
+        MOV AH,09H
+        LEA DX,INVALID
+        INT 21H
+        JMP RETURN1
+MENU@_FUNC ENDP
+
+
+
+
+DISPLAY_INVALID PROC
+
+    MOV AH,09H;IF OTHER THAN YES & NO, RETURN
+    LEA DX,INVALID
+    INT 21H
+
+    RET;CONTINUE
+DISPLAY_INVALID ENDP
+
+
+
+
+ORDER_AGAIN_DETAIL1 PROC
+    MOV AH,09H
+    LEA DX,ENDL
+    INT 21H
+
+
+RETURN9:
+    MOV AH,09H
+    LEA DX,VIEW_MENU2
+    INT 21H
+    ;READ CHAR
+    MOV AH,01H
+    INT 21H
+
+
+    CMP AL,'Y'
+    JE VIEW_AGAIN_DETAIL
+    CMP AL,'y'
+    JE VIEW_AGAIN_DETAIL
+    CMP AL,'N'
+    JE NO_VIEW_AGAIN_DETAIL
+    CMP AL,'n'
+    JE NO_VIEW_AGAIN_DETAIL
+    CALL DISPLAY_INVALID;DISPLAY INVALID
+    JMP RETURN9
+
+
+    VIEW_AGAIN_DETAIL:
+    JMP RETURN3
+    NO_VIEW_AGAIN_DETAIL:
+    JMP RETURN5
+
+
+ORDER_AGAIN_DETAIL1 ENDP
+ORDER_AGAIN_DETAIL2 PROC
+    MOV AH,09H
+    LEA DX,ENDL
+    INT 21H
+
+
+RETURN10:
+    MOV AH,09H
+    LEA DX,VIEW_MENU2
+    INT 21H
+    ;READ CHAR
+    MOV AH,01H
+    INT 21H
+
+
+    CMP AL,'Y'
+    JE VIEW_AGAIN_DETAIL1
+    CMP AL,'y'
+    JE VIEW_AGAIN_DETAIL1
+    CMP AL,'N'
+    JE NO_VIEW_AGAIN_DETAIL1
+    CMP AL,'n'
+    JE NO_VIEW_AGAIN_DETAIL1
+    CALL DISPLAY_INVALID;DISPLAY INVALID
+    JMP RETURN10
+
+
+    VIEW_AGAIN_DETAIL1:
+    JMP RETURN3
+    NO_VIEW_AGAIN_DETAIL1:
+    JMP RETURN6
+
+
+ORDER_AGAIN_DETAIL2 ENDP
+ORDER_AGAIN_DETAIL3 PROC
+
+
+    MOV AH,09H
+    LEA DX,ENDL
+    INT 21H
+
+
+RETURN11:
+    MOV AH,09H
+    LEA DX,VIEW_MENU2
+    INT 21H
+    ;READ CHAR
+    MOV AH,01H
+    INT 21H
+
+
+    CMP AL,'Y'
+    JE VIEW_AGAIN_DETAIL2
+    CMP AL,'y'
+    JE VIEW_AGAIN_DETAIL2
+    CMP AL,'N'
+    JE NO_VIEW_AGAIN_DETAIL2
+    CMP AL,'n'
+    JE NO_VIEW_AGAIN_DETAIL2
+    CALL DISPLAY_INVALID;DISPLAY INVALID
+    JMP RETURN11
+
+
+    VIEW_AGAIN_DETAIL2:
+    JMP RETURN3
+    NO_VIEW_AGAIN_DETAIL2:
+    JMP RETURN7
+ORDER_AGAIN_DETAIL3 ENDP
+ORDER_AGAIN_DETAIL4 PROC
+
+
+    MOV AH,09H
+    LEA DX,ENDL
+    INT 21H
+
+
+RETURN12:
+    MOV AH,09H
+    LEA DX,VIEW_MENU2
+    INT 21H
+    ;READ CHAR
+    MOV AH,01H
+    INT 21H
+
+
+    CMP AL,'Y'
+    JE VIEW_AGAIN_DETAIL3
+    CMP AL,'y'
+    JE VIEW_AGAIN_DETAIL3
+    CMP AL,'N'
+    JE NO_VIEW_AGAIN_DETAIL3
+    CMP AL,'n'
+    JE NO_VIEW_AGAIN_DETAIL3
+    CALL DISPLAY_INVALID;DISPLAY INVALID
+    JMP RETURN12
+
+
+    VIEW_AGAIN_DETAIL3:
+    JMP RETURN3
+    NO_VIEW_AGAIN_DETAIL3:
+    JMP RETURN8
+
+
+ORDER_AGAIN_DETAIL4 ENDP
+
+
+
+
+ORDER_TC_START PROC
+    TC_RESERVE:
+    MOV AH,09H
+    LEA DX,ESCAPE
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,RESV     ;PRINT
+    INT 21H
+
+
+    MOV AH,01H
+    INT 21H
+    MOV INP1,AL     ;GET FIRST-DIGIT
+
+
+    MOV AH,01H
+    INT 21H
+    MOV INP2,AL     ;GET SECOND-DIGIT
+
+    CMP INP1,0DH
+    JE TC_NOTVALID1
+    CMP INP1,1BH
+    JE TC_BH_ESC
+    TC_BH_ESC:
+        CMP INP2,1BH
+        JE TC_ASK_MORE_ORDER_YN1 ;exit to main menu
+
+
+    CMP INP1,30H
+    JE TC_NOTVALID1
+    CMP INP1,31H
+    JNG TC_VALID
+            CMP INP2,0DH
+            JE TC_VALID
+            JMP TC_NOTVALID
+
+
+    TC_NOTVALID1:
+    JMP TC_NOTVALID
+    TC_ASK_MORE_ORDER_YN1:
+    JMP RETURN1
+   
+    TC_VALID:
+    MOV AL,VARTABLE_LEFT
+    CMP AL,INP1
+    JL TC_NOTVALID1
+    CMP INP1,3AH
+    JGE TC_NOTVALID1
+
+
+    CMP INP1,31H
+    JGE TC_ENTER
+        TC_ENTER:
+            CMP INP2,0DH
+            JNE TC_TEN
+                    MOV AH,09H
+                    LEA DX,TOTAL
+                    INT 21H
+
+
+                    MOV AH,02H
+                    MOV DL,INP1
+                    INT 21H
+
+
+                    MOV AL,INP1
+                    MOV TABLENO,AL       ; VALUE OF TABLENO IS ALREADY ADDED 30H
+                                       
+                    SUB TABLENO,30H
+                    MOV AL,TABLENO
+                    ADD TC_TABLECALC,AL             ;customer that order tc will be saved into var tc_tablecalc
+                   
+                    MOV AH,09H
+                    LEA DX,TABLE_LEFT1
+                    INT 21H
+
+
+                    CMP VARTABLE_LEFT,3AH
+                    JNE TC_TEN_DEC
+                    MOV AL,3AH
+                    SUB AL,TABLENO
+                    MOV VARTABLE_LEFT,AL
+
+
+                    MOV AH,02H
+                    MOV DL,VARTABLE_LEFT
+                    INT 21H
+
+
+                    MOV AH,09H
+                    LEA DX,TABLE_LEFT2
+                    INT 21H
+
+
+                    CMP VARTABLE_LEFT,30H
+                    JE TC_PAYMENT ;JUMP TO PAYMENT IF 10
+                    JMP TC_ASK_MORE_ORDER_YN
+
+
+                        TC_TEN_DEC:
+                        MOV AL,VARTABLE_LEFT
+                        SUB AL,TABLENO
+                        MOV VARTABLE_LEFT,AL
+
+
+                        MOV AH,02H
+                        MOV DL,VARTABLE_LEFT            ;30H IS ADDED
+                        INT 21H
+
+
+                        MOV AH,09H
+                        LEA DX,TABLE_LEFT2
+                        INT 21H
+
+
+                        CMP VARTABLE_LEFT,30H
+                        JE TC_PAYMENT ;JUMP TO PAYMENT IF 10
+                        JMP TC_ASK_MORE_ORDER_YN
+
+
+        TC_TEN:
+            CMP VARTABLE_LEFT,3AH
+            JNE TC_NOTVALID
+            CMP INP2,30H
+            JNE TC_NOTVALID
+                    MOV AH,09H
+                    LEA DX,TOTAL
+                    INT 21H
+
+
+                    MOV AH,02H
+                    MOV DL,INP1
+                    INT 21H
+
+
+                    MOV AH,02H
+                    MOV DL,INP2
+                    INT 21H
+                   
+                    MOV TC_TABLECALC,0AH
+                    JMP TC_PAYMENT       ;JUMP TO PAYMENT IF 10
+    TC_NOTVALID:
+    MOV AH,09H
+    LEA DX,INVALID
+    INT 21H
+    JMP TC_RESERVE
+
+
+    TC_ASK_MORE_ORDER_YN:
+    CALL MORE_ORDER_YN
+
+
+    TC_PAYMENT:
+    JMP NO_ORDER_MORE
+ORDER_TC_START ENDP
+ORDER_SF_START PROC
+    SF_RESERVE:
+    MOV AH,09H
+    LEA DX,ESCAPE
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,RESV     ;PRINT
+    INT 21H
+
+
+    MOV AH,01H
+    INT 21H
+    MOV INP1,AL     ;GET FIRST-DIGIT
+
+
+    MOV AH,01H
+    INT 21H
+    MOV INP2,AL     ;GET SECOND-DIGIT
+
+    CMP INP1,0DH
+    JE SF_NOTVALID1
+    CMP INP1,1BH
+    JE SF_BH_ESC
+    SF_BH_ESC:
+        CMP INP2,1BH
+        JE SF_ASK_MORE_ORDER_YN1 ;exit to main menu
+
+
+    CMP INP1,30H
+    JE SF_NOTVALID1
+    CMP INP1,31H
+    JNG SF_VALID
+            CMP INP2,0DH
+            JE SF_VALID
+            JMP SF_NOTVALID
+   
+    SF_NOTVALID1:
+    JMP SF_NOTVALID
+    SF_ASK_MORE_ORDER_YN1:
+    JMP RETURN1
+
+
+    SF_VALID:
+    MOV AL,VARTABLE_LEFT
+    CMP AL,INP1
+    JL SF_NOTVALID1
+    CMP INP1,3AH
+    JGE SF_NOTVALID1
+
+
+    CMP INP1,31H
+    JGE SF_ENTER
+        SF_ENTER:
+            CMP INP2,0DH
+            JNE SF_TEN
+                    MOV AH,09H
+                    LEA DX,TOTAL
+                    INT 21H
+
+
+                    MOV AH,02H
+                    MOV DL,INP1
+                    INT 21H
+
+
+                    MOV AL,INP1
+                    MOV TABLENO,AL       ; VALUE OF TABLENO IS ALREADY ADDED 30H
+                   
+                    SUB TABLENO,30H
+                    MOV AL,TABLENO
+                    ADD SF_TABLECALC,AL             ;customer that order SF will be saved into var SF_tablecalc
+
+
+                    MOV AH,09H
+                    LEA DX,TABLE_LEFT1
+                    INT 21H
+
+
+                    CMP VARTABLE_LEFT,3AH
+                    JNE SF_TEN_DEC
+                    MOV AL,3AH
+                    SUB AL,TABLENO
+                    MOV VARTABLE_LEFT,AL
+
+
+                    MOV AH,02H
+                    MOV DL,VARTABLE_LEFT
+                    INT 21H
+
+
+                    MOV AH,09H
+                    LEA DX,TABLE_LEFT2
+                    INT 21H
+
+
+                    CMP VARTABLE_LEFT,30H
+                    JE SF_PAYMENT ;JUMP TO PAYMENT IF 10
+                    JMP SF_ASK_MORE_ORDER_YN
+
+
+                        SF_TEN_DEC:
+                        MOV AL,VARTABLE_LEFT
+                        SUB AL,TABLENO
+                        MOV VARTABLE_LEFT,AL
+
+
+                        MOV AH,02H
+                        MOV DL,VARTABLE_LEFT            ;30H IS ADDED
+                        INT 21H
+
+
+                        MOV AH,09H
+                        LEA DX,TABLE_LEFT2
+                        INT 21H
+
+
+                        CMP VARTABLE_LEFT,30H
+                        JE SF_PAYMENT ;JUMP TO PAYMENT IF 10
+                        JMP SF_ASK_MORE_ORDER_YN
+
+
+        SF_TEN:
+            CMP VARTABLE_LEFT,3AH
+            JNE SF_NOTVALID
+            CMP INP2,30H
+            JNE SF_NOTVALID
+                    MOV AH,09H
+                    LEA DX,TOTAL
+                    INT 21H
+
+
+                    MOV AH,02H
+                    MOV DL,INP1
+                    INT 21H
+
+
+                    MOV AH,02H
+                    MOV DL,INP2
+                    INT 21H
+
+
+                    MOV SF_TABLECALC,0AH
+                    JMP SF_PAYMENT       ;JUMP TO PAYMENT IF 10
+    SF_NOTVALID:
+    MOV AH,09H
+    LEA DX,INVALID
+    INT 21H
+    JMP SF_RESERVE
+
+
+    SF_ASK_MORE_ORDER_YN:
+    CALL MORE_ORDER_YN
+
+
+    SF_PAYMENT:
+    CALL PAYMENT
+ORDER_SF_START ENDP
+ORDER_MF_START PROC
+    MF_RESERVE:
+    MOV AH,09H
+    LEA DX,ESCAPE
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,RESV     ;PRINT
+    INT 21H
+
+
+    MOV AH,01H
+    INT 21H
+    MOV INP1,AL     ;GET FIRST-DIGIT
+
+
+    MOV AH,01H
+    INT 21H
+    MOV INP2,AL     ;GET SECOND-DIGIT
+
+    CMP INP1,0DH
+    JE MF_NOTVALID1
+    CMP INP1,1BH
+    JE MF_BH_ESC
+    MF_BH_ESC:
+        CMP INP2,1BH
+        JE MF_ASK_MORE_ORDER_YN1 ;exit to main menu
+
+
+    CMP INP1,30H
+    JE MF_NOTVALID1
+    CMP INP1,31H
+    JNG MF_VALID
+            CMP INP2,0DH
+            JE MF_VALID
+            JMP MF_NOTVALID
+   
+    MF_NOTVALID1:
+    JMP MF_NOTVALID
+    MF_ASK_MORE_ORDER_YN1:
+    JMP RETURN1
+
+    MF_VALID:
+    MOV AL,VARTABLE_LEFT
+    CMP AL,INP1
+    JL MF_NOTVALID1
+    CMP INP1,3AH
+    JGE MF_NOTVALID1
+   
+    CMP INP1,31H
+    JGE MF_ENTER
+        MF_ENTER:
+            CMP INP2,0DH
+            JNE MF_TEN
+                    MOV AH,09H
+                    LEA DX,TOTAL
+                    INT 21H
+
+
+                    MOV AH,02H
+                    MOV DL,INP1
+                    INT 21H
+
+
+                    MOV AL,INP1
+                    MOV TABLENO,AL       ; VALUE OF TABLENO IS ALREADY ADDED 30H
+                 
+                    SUB TABLENO,30H
+                    MOV AL,TABLENO
+                    ADD MF_TABLECALC,AL             ;customer that order MF will be saved into var MF_tablecalc
+
+
+                    MOV AH,09H
+                    LEA DX,TABLE_LEFT1
+                    INT 21H
+
+
+                    CMP VARTABLE_LEFT,3AH
+                    JNE MF_TEN_DEC
+                    MOV AL,3AH
+                    SUB AL,TABLENO
+                    MOV VARTABLE_LEFT,AL
+
+
+                    MOV AH,02H
+                    MOV DL,VARTABLE_LEFT
+                    INT 21H
+
+
+                    MOV AH,09H
+                    LEA DX,TABLE_LEFT2
+                    INT 21H
+
+
+                    CMP VARTABLE_LEFT,30H
+                    JE MF_PAYMENT ;JUMP TO PAYMENT IF 10
+                    JMP MF_ASK_MORE_ORDER_YN
+
+
+                        MF_TEN_DEC:
+                        MOV AL,VARTABLE_LEFT
+                        SUB AL,TABLENO
+                        MOV VARTABLE_LEFT,AL
+
+
+                        MOV AH,02H
+                        MOV DL,VARTABLE_LEFT            ;30H IS ADDED
+                        INT 21H
+
+
+                        MOV AH,09H
+                        LEA DX,TABLE_LEFT2
+                        INT 21H
+
+
+                        CMP VARTABLE_LEFT,30H
+                        JE MF_PAYMENT ;JUMP TO PAYMENT IF 10
+                        JMP MF_ASK_MORE_ORDER_YN
+
+
+        MF_TEN:
+            CMP VARTABLE_LEFT,3AH
+            JNE MF_NOTVALID
+            CMP INP2,30H
+            JNE MF_NOTVALID
+                    MOV AH,09H
+                    LEA DX,TOTAL
+                    INT 21H
+
+
+                    MOV AH,02H
+                    MOV DL,INP1
+                    INT 21H
+
+
+                    MOV AH,02H
+                    MOV DL,INP2
+                    INT 21H
+
+
+                    MOV MF_TABLECALC,0AH
+                    JMP MF_PAYMENT       ;JUMP TO PAYMENT IF 10
+    MF_NOTVALID:
+    MOV AH,09H
+    LEA DX,INVALID
+    INT 21H
+    JMP MF_RESERVE
+
+
+    MF_ASK_MORE_ORDER_YN:
+    CALL MORE_ORDER_YN
+
+
+    MF_PAYMENT:
+    CALL PAYMENT
+ORDER_MF_START ENDP
+ORDER_VD_START PROC
+    VD_RESERVE:
+    MOV AH,09H
+    LEA DX,ESCAPE
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,RESV     ;PRINT
+    INT 21H
+
+
+    MOV AH,01H
+    INT 21H
+    MOV INP1,AL     ;GET FIRST-DIGIT
+
+
+    MOV AH,01H
+    INT 21H
+    MOV INP2,AL     ;GET SECOND-DIGIT
+
+    CMP INP1,0DH
+    JE VD_NOTVALID1
+    CMP INP1,1BH
+    JE VD_BH_ESC
+    VD_BH_ESC:
+        CMP INP2,1BH
+        JE VD_ASK_MORE_ORDER_YN1 ;exit to main menu
+
+
+    CMP INP1,30H
+    JE VD_NOTVALID1
+    CMP INP1,31H
+    JNG VD_VALID
+            CMP INP2,0DH
+            JE VD_VALID
+            JMP VD_NOTVALID
+   
+    VD_NOTVALID1:
+    JMP VD_NOTVALID
+    VD_ASK_MORE_ORDER_YN1:
+    JMP RETURN1
+
+
+    VD_VALID:
+    MOV AL,VARTABLE_LEFT
+    CMP AL,INP1
+    JL VD_NOTVALID1
+    CMP INP1,3AH
+    JGE VD_NOTVALID1
+
+
+    CMP INP1,31H
+    JGE VD_ENTER
+        VD_ENTER:
+            CMP INP2,0DH
+            JNE VD_TEN
+                    MOV AH,09H
+                    LEA DX,TOTAL
+                    INT 21H
+
+
+                    MOV AH,02H
+                    MOV DL,INP1
+                    INT 21H
+
+
+                    MOV AL,INP1
+                    MOV TABLENO,AL       ; VALUE OF TABLENO IS ALREADY ADDED 30H
+                   
+                    SUB TABLENO,30H
+                    MOV AL,TABLENO
+                    ADD VD_TABLECALC,AL             ;customer that order VD will be saved into var VD_tablecalc
+
+
+                    MOV AH,09H
+                    LEA DX,TABLE_LEFT1
+                    INT 21H
+
+
+                        CMP VARTABLE_LEFT,3AH
+                    JNE VD_TEN_DEC
+                    MOV AL,3AH
+                    SUB AL,TABLENO
+                    MOV VARTABLE_LEFT,AL
+
+
+                    MOV AH,02H
+                    MOV DL,VARTABLE_LEFT
+                    INT 21H
+
+
+                    MOV AH,09H
+                    LEA DX,TABLE_LEFT2
+                    INT 21H
+
+
+                    CMP VARTABLE_LEFT,30H
+                    JE VD_PAYMENT ;JUMP TO PAYMENT IF 10
+                    JMP VD_ASK_MORE_ORDER_YN
+
+
+                        VD_TEN_DEC:
+                        MOV AL,VARTABLE_LEFT
+                        SUB AL,TABLENO
+                        MOV VARTABLE_LEFT,AL
+
+
+                        MOV AH,02H
+                        MOV DL,VARTABLE_LEFT            ;30H IS ADDED
+                        INT 21H
+
+
+                        MOV AH,09H
+                        LEA DX,TABLE_LEFT2
+                        INT 21H
+
+
+                        CMP VARTABLE_LEFT,30H
+                        JE VD_PAYMENT ;JUMP TO PAYMENT IF 10
+                        JMP VD_ASK_MORE_ORDER_YN
+
+
+        VD_TEN:
+            CMP VARTABLE_LEFT,3AH
+            JNE VD_NOTVALID
+            CMP INP2,30H
+            JNE VD_NOTVALID
+                    MOV AH,09H
+                    LEA DX,TOTAL
+                    INT 21H
+
+
+                    MOV AH,02H
+                    MOV DL,INP1
+                    INT 21H
+
+
+                    MOV AH,02H
+                    MOV DL,INP2
+                    INT 21H
+
+
+                    MOV VD_TABLECALC,0AH
+                    JMP VD_PAYMENT       ;JUMP TO PAYMENT IF 10
+    VD_NOTVALID:
+    MOV AH,09H
+    LEA DX,INVALID
+    INT 21H
+    JMP VD_RESERVE
+
+
+    VD_ASK_MORE_ORDER_YN:
+    CALL MORE_ORDER_YN
+
+
+    VD_PAYMENT:
+    CALL PAYMENT
+ORDER_VD_START ENDP
+
+
+
+
+PAYMENT PROC
+    CALL CALCULATE
+   PAYMENT_AGAIN:
+    MOV AH,09H
+    LEA DX,CHECKOUT
+    INT 21H
+
+
+    MOV AH,01H
+    INT 21H
+
+    CMP AL,31H
+    JE PAYMENT_1ND_OPTION
+    CMP AL,32H
+    JE PAYMENT_2ND_OPTION
+    CMP AL,33H
+    JE PAYMENT_METHOD_EXIT
+    CALL DISPLAY_INVALID
+    JMP PAYMENT_AGAIN
+
+PAYMENT_1ND_OPTION:
+    CALL PAY_1_OPTION
+PAYMENT_2ND_OPTION:
+    CALL PAY_2_OPTION
+PAYMENT_METHOD_EXIT:
+    JMP RETURN1
+
+PAYMENT ENDP
+
+
+
+
+MORE_ORDER_YN PROC
+RETURN13:
+    MOV AH,09H
+    LEA DX,ORDER_AGAIN
+    INT 21H
+
+
+    MOV AH,01H;READ INPUT
+    INT 21H
+
+
+    CMP AL,'Y'
+    JE YES_ORDER_MORE
+    CMP AL,'y'
+    JE YES_ORDER_MORE
+    CMP AL,'N'
+    JE NO_ORDER_MORE
+    CMP AL,'n'
+    JE NO_ORDER_MORE
+    CALL DISPLAY_INVALID
+    JMP RETURN13
+
+
+YES_ORDER_MORE:
+    MOV AH,09H
+    LEA DX,ENDL
+    INT 21H
+
+
+    JMP RETURN_ORDER_MORE
+
+
+NO_ORDER_MORE:
+    CALL PAYMENT
+
+
+MORE_ORDER_YN ENDP
+
+
+
+
+CALCULATE PROC
+
+
+    XOR BX,BX
+    MOV AX,888
+    MOV BL,TC_TABLECALC
+    MUL BX
+    MOV TC_TOTAL,AX
+
+
+    MOV AX,0988
+    MOV BL,SF_TABLECALC
+    MUL BX
+    MOV SF_TOTAL,AX
+
+
+    MOV AX,0788
+    MOV BL,MF_TABLECALC
+    MUL BX
+    MOV MF_TOTAL,AX
+
+
+    MOV AX,0488
+    MOV BL,VD_TABLECALC
+    MUL BX
+    MOV VD_TOTAL,AX
+
+
+    ADD AX,TC_TOTAL
+    ADD AX,SF_TOTAL
+    ADD AX,MF_TOTAL
+    MOV GRANDTOTAL,AX
+
+
+    RET
+CALCULATE ENDP
+
+
+PRINT_COST PROC
+    XOR BX,BX
+    XOR CX,CX
+    MOV CX,4
+    MOV BL,10
+STACK_3DIGIT:
+    XOR DX,DX
+    DIV BX
+    PUSH DX
+LOOP STACK_3DIGIT
+
+
+    XOR SI,SI
+    POP AX
+    ADD AX,30H
+    CMP AX,30H
+    JNE IS_NOT_ZERO ;IS NOT ZERO THEN PRINT THE DIGIT AND INDICATE IT IS NOT ZERO
+    MOV DL,20H      ;IS ZERO THEN PRINT SPACEBAR AND JUMP TO NEXT DIGIT
+    MOV AH,02H
+    INT 21H
+
+
+    JMP DIGIT2
+IS_NOT_ZERO: ;HERE
+    MOV DL,AL
+    MOV AH,02H
+    INT 21H
+
+
+    MOV SI,1 ;INDICATE NOT ZERO
+DIGIT2:
+    POP AX
+    ADD AX,30H
+    CMP AX,30H
+    JNE IS_NOT_ZERO2
+    CMP SI,1 ;CHECK PREVIOUS DIGIT IS NOT ZERO OR NOT
+    JGE IS_NOT_ZERO2
+    MOV DL,20H
+    MOV AH,02H
+    INT 21H
+
+
+    JMP DIGIT3
+IS_NOT_ZERO2:
+    MOV DL,AL
+    MOV AH,02H
+    INT 21H
+
+
+    INC SI
+DIGIT3:
+    POP AX
+    ADD AX,30H
+    CMP AX,30H
+    JNE IS_NOT_ZERO3
+    CMP SI,1
+    JGE IS_NOT_ZERO3
+    MOV DL,20H
+    MOV AH,02H
+    INT 21H
+
+
+    JMP DIGIT4
+IS_NOT_ZERO3:
+    MOV DL,AL
+    MOV AH,02H
+    INT 21H
+
+
+    INC SI
+DIGIT4:
+    POP AX
+    ADD AX,30H
+    MOV DL,AL
+    MOV AH,02H
+    INT 21H
+
+
+    XOR AX,AX
+
+
+    RET
+PRINT_COST ENDP
+
+
+PRINT_QUANTITY PROC
+    CMP AL,3AH
+    JNE NOT_TEN
+    MOV AH,02H
+    MOV DL,31H
+    INT 21H
+
+
+    MOV AH,02H
+    MOV DL,30H
+    INT 21H
+    JMP NEXT
+
+
+NOT_TEN:
+    PUSH AX
+    MOV AH,02H
+    MOV DL,20H
+    INT 21H
+
+
+    POP AX
+    MOV AH,02H
+    MOV DL,AL
+    INT 21H
+NEXT:
+    RET
+PRINT_QUANTITY ENDP
+
+
+RECEIPT PROC
+    RECEIPT_RUN:
+    MOV AH,09H
+    LEA DX,RECEIPT_TITLE
+    INT 21H
+
+    MOV AH,09H
+    LEA DX,LINE
+    INT 21H
+   
+    MOV AH,09H
+    LEA DX,RECEIPT_DETAIL
+    INT 21H
+   
+    MOV AH,09H
+    LEA DX,LINE1
+    INT 21H
+    ;| Item Qty Price Total |
+    MOV AH,09H
+    LEA DX,RECEIPT_TQPT
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,LINE1
+    INT 21H
+    ;Traditional Classic:
+    MOV AH,09H
+    LEA DX,RECEIPT_ITEM1
+    INT 21H
+
+
+    MOV AL,TC_TABLECALC
+    ADD AL,30H
+    CALL PRINT_QUANTITY
+
+
+    MOV AH,09H
+    LEA DX,TC_PRICE
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,TAB
+    INT 21H
+
+
+    MOV AX,TC_TOTAL
+    CALL PRINT_COST
+
+
+    MOV AH,09H
+    LEA DX,LINE3
+    INT 21H
+
+
+    ;Seafood Feast:
+    MOV AH,09H
+    LEA DX,RECEIPT_ITEM2
+    INT 21H
+
+
+    MOV AL,SF_TABLECALC
+    ADD AL,30H
+    CALL PRINT_QUANTITY
+
+
+    MOV AH,09H
+    LEA DX,SF_PRICE
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,TAB
+    INT 21H
+
+
+    MOV AX,SF_TOTAL
+    CALL PRINT_COST
+
+
+    MOV AH,09H
+    LEA DX,LINE3
+    INT 21H
+    ;Modern Fusion:
+    MOV AH,09H
+    LEA DX,RECEIPT_ITEM3
+    INT 21H
+
+
+    MOV AL,MF_TABLECALC
+    ADD AL,30H
+    CALL PRINT_QUANTITY
+
+
+    MOV AH,09H
+    LEA DX,MF_PRICE
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,TAB
+    INT 21H
+
+
+    MOV AX,MF_TOTAL
+    CALL PRINT_COST
+
+
+    MOV AH,09H
+    LEA DX,LINE3
+    INT 21H
+    ;Vegetarian Delight:
+    MOV AH,09H
+    LEA DX,RECEIPT_ITEM4
+    INT 21H
+
+
+    MOV AL,VD_TABLECALC
+    ADD AL,30H
+    CALL PRINT_QUANTITY
+
+
+    MOV AH,09H
+    LEA DX,VD_PRICE
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,TAB
+    INT 21H
+
+
+    MOV AX,VD_TOTAL
+    CALL PRINT_COST
+
+
+    MOV AH,09H
+    LEA DX,LINE3
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,LINE1
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,RECEIPT_P_METHOD
+    INT 21H
+
+
+    MOV AX,STORE_P_METHOD
+    CMP AX,31H
+    JE PAYMENT_1ND_OPTION_R
+    CMP AX,32H
+    JE PAYMENT_2ND_OPTION_R
+
+
+    PAYMENT_1ND_OPTION_R:
+    MOV AH,09H
+    LEA DX,PAYMENT_CASH_R
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,LINE3
+    INT 21H
+    JMP PRINT_TOTAL_R;Done print CASH, Skip Print E-Wallet
+   
+    PAYMENT_2ND_OPTION_R:
+    MOV AH,09H
+    LEA DX,PAYMENT_EWALLET_R
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,LINE3
+    INT 21H
+PRINT_TOTAL_R:
+    MOV AH,09H
+    LEA DX,RECEIPT_TOTAL
+    INT 21H
+
+
+    MOV AX,GRANDTOTAL
+    CALL PRINT_COST
+   
+    MOV AH,09H
+    LEA DX,LINE3
+    INT 21H
+
+    MOV AH,09H
+    LEA DX,PAY_AMOUNT
+    INT 21H
+    ;PRINT PAY AMOUNT
+    MOV AX,STORE_P_AMOUNT
+    CALL PRINT_COST
+
+    MOV AH,09H
+    LEA DX,LINE3
+    INT 21H
+
+    MOV AH,09H
+    LEA DX,CHANGE
+    INT 21H
+
+    MOV AX,BALANCE
+    CALL PRINT_COST
+
+    MOV AH,09H
+    LEA DX,LINE3
+    INT 21H
+
+    MOV AH,09H
+    LEA DX,LINE1
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,THANK_YOU
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,LINE
+    INT 21H
+
+
+PROMPT_AGAIN:
+    MOV AH,09H
+    LEA DX,ENDL
+    INT 21H
+
+
+    MOV AH,09H
+    LEA DX,MORE_CUSTOMER
+    INT 21H
+
+
+    MOV AH,01H
+    INT 21H
+    CMP AL,0DH
+    JE PROGRAM_RUN_AGAIN
+    CMP AL,1BH
+    JE EXIT_PROGRAM
+    CALL DISPLAY_INVALID
+    JMP PROMPT_AGAIN
+PROGRAM_RUN_AGAIN:
+    JMP RETURN1
+EXIT_PROGRAM:
+    JMP EXIT
+
+
+RECEIPT ENDP
+
+
+PAY_1_OPTION PROC
+    MOV STORE_P_METHOD,31H;Store User Payment Method for Print Receipt
+
+ASK_AMOUNT_PAY:
+    MOV AH,09H
+    LEA DX,PAYMENT_CASH
+    INT 21H
+
+    MOV AH,09H
+    LEA DX,SHOW_PAY_AMOUNT
+    INT 21H
+
+    MOV AX,GRANDTOTAL
+    CALL PRINT_COST
+
+    MOV AH,09H
+    LEA DX,PAYMENT_CASH1
+    INT 21H
+    ;READ
+    MOV AH,01H
+    INT 21H
+    MOV ENTER_AMOUNT_PAY1,AL
+
+    CMP ENTER_AMOUNT_PAY1,30H
+    JL  INVALID_P_AMOUNT
+    CMP ENTER_AMOUNT_PAY1,39H
+    JG INVALID_P_AMOUNT
+
+    MOV AH,01H
+    INT 21H
+    MOV ENTER_AMOUNT_PAY2,AL
+
+    CMP ENTER_AMOUNT_PAY2,30H
+    JL  INVALID_P_AMOUNT
+    CMP ENTER_AMOUNT_PAY2,39H
+    JG INVALID_P_AMOUNT
+
+    MOV AH,01H
+    INT 21H
+    MOV ENTER_AMOUNT_PAY3,AL
+
+    CMP ENTER_AMOUNT_PAY3,30H
+    JL  INVALID_P_AMOUNT
+    CMP ENTER_AMOUNT_PAY3,39H
+    JG INVALID_P_AMOUNT
+
+    MOV AH,01H
+    INT 21H
+    MOV ENTER_AMOUNT_PAY4,AL
+
+    CMP ENTER_AMOUNT_PAY4,30H
+    JL  INVALID_P_AMOUNT
+    CMP ENTER_AMOUNT_PAY4,39H
+    JG INVALID_P_AMOUNT
+    JMP GO_VALID
+
+INVALID_P_AMOUNT:
+    CALL DISPLAY_INVALID
+    JMP ASK_AMOUNT_PAY
+
+GO_VALID:
+    MOV AL,ENTER_AMOUNT_PAY1
+    SUB AL,30H
+    MOV ENTER_AMOUNT_PAY1,AL
+
+    MOV AL,ENTER_AMOUNT_PAY2
+    SUB AL,30H
+    MOV ENTER_AMOUNT_PAY2,AL
+
+    MOV AL,ENTER_AMOUNT_PAY3
+    SUB AL,30H
+    MOV ENTER_AMOUNT_PAY3,AL
+
+    MOV AL,ENTER_AMOUNT_PAY4
+    SUB AL,30H
+    MOV ENTER_AMOUNT_PAY4,AL
+
+    MOV AX,0
+    MOV AL,ENTER_AMOUNT_PAY1
+    MOV BX,1000
+    MUL BX
+    MOV STORE_P_AMOUNT,AX
+
+    MOV AX,0
+    MOV AL,ENTER_AMOUNT_PAY2
+    MOV BX,100
+    MUL BX
+    ADD STORE_P_AMOUNT,AX
+
+    MOV AX,0
+    MOV AL,ENTER_AMOUNT_PAY3
+    MOV BX,10
+    MUL BX
+    ADD STORE_P_AMOUNT,AX
+
+    MOV AX,0
+    MOV AL,ENTER_AMOUNT_PAY4
+    MOV BX,1
+    MUL BX
+    ADD STORE_P_AMOUNT,AX
+    
+    MOV AX,GRANDTOTAL
+    CMP STORE_P_AMOUNT,AX
+    JGE VALID_P_AMOUNT
+    CMP STORE_P_AMOUNT,AX
+    JL LESS_P_AMOUNT
+    CALL DISPLAY_INVALID
+    JMP ASK_AMOUNT_PAY
+
+LESS_P_AMOUNT:
+    MOV AH,09H
+    LEA DX,LESS_AMOUNT
+    INT 21H
+
+    JMP ASK_AMOUNT_PAY
+
+VALID_P_AMOUNT:
+    MOV AX,STORE_P_AMOUNT
+    SUB AX,GRANDTOTAL
+    MOV BALANCE,AX
+
+    JMP RECEIPT_RUN
+PAY_1_OPTION ENDP
+PAY_2_OPTION PROC
+    MOV STORE_P_METHOD,32H;Store User Payment Method for Print Receipt
+
+ASK_AMOUNT_PAY1:   
+    MOV AH,09H
+    LEA DX,PAYMENT_EWALLET
+    INT 21H
+
+    MOV AH,09H
+    LEA DX,SHOW_PAY_AMOUNT
+    INT 21H
+
+    MOV AX,GRANDTOTAL
+    CALL PRINT_COST
+
+    MOV AH,09H
+    LEA DX,PAYMENT_EWALLET1
+    INT 21H
+    ;READ
+    MOV AH,01H
+    INT 21H
+    MOV ENTER_AMOUNT_PAY1,AL
+
+    CMP ENTER_AMOUNT_PAY1,30H
+    JL  INVALID_P_AMOUNT1
+    CMP ENTER_AMOUNT_PAY1,39H
+    JG INVALID_P_AMOUNT1
+
+    MOV AH,01H
+    INT 21H
+    MOV ENTER_AMOUNT_PAY2,AL
+
+    CMP ENTER_AMOUNT_PAY2,30H
+    JL  INVALID_P_AMOUNT1
+    CMP ENTER_AMOUNT_PAY2,39H
+    JG INVALID_P_AMOUNT1
+
+    MOV AH,01H
+    INT 21H
+    MOV ENTER_AMOUNT_PAY3,AL
+
+    CMP ENTER_AMOUNT_PAY3,30H
+    JL  INVALID_P_AMOUNT1
+    CMP ENTER_AMOUNT_PAY3,39H
+    JG INVALID_P_AMOUNT1
+
+    MOV AH,01H
+    INT 21H
+    MOV ENTER_AMOUNT_PAY4,AL
+
+    CMP ENTER_AMOUNT_PAY4,30H
+    JL  INVALID_P_AMOUNT1
+    CMP ENTER_AMOUNT_PAY4,39H
+    JG INVALID_P_AMOUNT1
+    JMP GO_VALID1
+
+INVALID_P_AMOUNT1:
+    CALL DISPLAY_INVALID
+
+    MOV AH,09H
+    LEA DX,ENDL
+    INT 21H
+    
+    JMP ASK_AMOUNT_PAY1
+
+GO_VALID1:
+    MOV AL,ENTER_AMOUNT_PAY1
+    SUB AL,30H
+    MOV ENTER_AMOUNT_PAY1,AL
+
+    MOV AL,ENTER_AMOUNT_PAY2
+    SUB AL,30H
+    MOV ENTER_AMOUNT_PAY2,AL
+
+    MOV AL,ENTER_AMOUNT_PAY3
+    SUB AL,30H
+    MOV ENTER_AMOUNT_PAY3,AL
+
+    MOV AL,ENTER_AMOUNT_PAY4
+    SUB AL,30H
+    MOV ENTER_AMOUNT_PAY4,AL
+
+    MOV AX,0
+    MOV AL,ENTER_AMOUNT_PAY1
+    MOV BX,1000
+    MUL BX
+    MOV STORE_P_AMOUNT,AX
+
+    MOV AX,0
+    MOV AL,ENTER_AMOUNT_PAY2
+    MOV BX,100
+    MUL BX
+    ADD STORE_P_AMOUNT,AX
+
+    MOV AX,0
+    MOV AL,ENTER_AMOUNT_PAY3
+    MOV BX,10
+    MUL BX
+    ADD STORE_P_AMOUNT,AX
+
+    MOV AX,0
+    MOV AL,ENTER_AMOUNT_PAY4
+    MOV BX,1
+    MUL BX
+    ADD STORE_P_AMOUNT,AX
+
+    MOV AX,GRANDTOTAL
+    CMP STORE_P_AMOUNT,AX
+    JGE VALID_P_AMOUNT1
+    CMP STORE_P_AMOUNT,AX
+    JL LESS_P_AMOUNT1
+    CALL DISPLAY_INVALID
+    JMP ASK_AMOUNT_PAY1
+
+LESS_P_AMOUNT1:
+    MOV AH,09H
+    LEA DX,LESS_AMOUNT
+    INT 21H
+
+    JMP ASK_AMOUNT_PAY
+
+VALID_P_AMOUNT1:
+    MOV AX,STORE_P_AMOUNT
+    SUB AX,GRANDTOTAL
+    MOV BALANCE,AX
+
+    JMP RECEIPT_RUN
+PAY_2_OPTION ENDP
+
+
+LOOP_PRINT PROC                         ; PRINT VALUE
+    ;initialize count
+                                    MOV  CX,0                               ;CX=0
+                                    MOV  DX,0                               ;DX=0
+    label3:                        
+    ; if ax is zero
+                                    CMP  AX,0                               ;AX=57750,5775,577,57,5,0
+                                    JE   print_num3                         ;IF(AX==0)
+       
+    ;initialize bx to 10
+                                    MOV  BX,10                              ;BX=10
+       
+    ; extract the last digit
+                                    DIV  BX                                 ;AX=AX/10               AX=5775,577,57,5,0
+       
+    ;push it in the stack
+                                    PUSH DX                                 ;DX=|5|7|7|5|0|
+       
+    ;increment the count
+                                    INC  CX                                 ;CX=1,2,3,4,5
+         
+    ;set dx to 0
+                                    XOR  DX,DX                              ;
+       
+                                    JMP  label3
+    print_num3:                    
+    ;check if count
+    ;is greater than zero
+                                    CMP  CX,0                               ;CX=5,4,3,2,1,0
+                                    JE   RET_LOOP_PRINT                         ;IF(CX==0)
+                                   
+       
+    ;pop the top of stack
+                                    POP  DX                                 ;DX=|5|7|7|5|0|
+       
+    ;add 48 so that it
+    ;represents the ASCII
+    ;value of digits
+                                    ADD  DX,48
+       
+    ;interrupt to print a
+    ;character
+                                    MOV  AH,02H
+                                    INT  21H                                ;print={5,7,7,5,0}
+                                    INC  AX
+       
+    ;decrease the count
+                                    DEC  CX                                 ;CX=4,3,2,1,0
+                                    JMP  print_num3
+   
+    RET_LOOP_PRINT:                      
+   
+                                    RET
+   
+LOOP_PRINT ENDP
+
+
+MAIN ENDP
+END MAIN
+
